@@ -92,7 +92,7 @@ class DQNAgent(BaseAgent):
 
             # Save model weights after each 250 episodes
             if self.episode_num % 250 == 0:
-                filename = os.path.join(util.get_param('out'), "landing_dqn_weights.h5")
+                filename = os.path.join(util.get_param('out'), "dqn_weights.h5")
                 self.save_weights(filename)
 
             # Reset episode vars
