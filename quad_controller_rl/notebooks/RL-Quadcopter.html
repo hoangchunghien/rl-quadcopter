@@ -12107,7 +12107,9 @@ div#notebook {
 <h3 id="Implementation-notes">Implementation notes<a class="anchor-link" href="#Implementation-notes">&#182;</a></h3><p><strong>Q</strong>: Discuss your implementation below briefly, using the same questions as before to guide you.</p>
 <p><strong>A</strong>:</p>
 <ul>
-<li>I use the same algorithm with these tasks above.</li>
+<li>I use the same algorithm DQN with these tasks above.</li>
+<li>The hyperparameters that I use in DQN was <code>gamma=0.9</code>, <code>lr=0.001</code>, <code>epsilon_decay=0.996</code>, <code>epsilon minimum = 0.01</code>, <code>replay memory size = 10k</code>, <code>batch size = 64</code></li>
+<li>I use 3 fully connected layers with the first layer have a size of 32, the second layer have a size of 64 using relu activation, and the last layer equal to the size of the discretized actions which is output.</li>
 </ul>
 <h3 id="Plot-episode-rewards">Plot episode rewards<a class="anchor-link" href="#Plot-episode-rewards">&#182;</a></h3><p>As before, plot the episode rewards, either from a single run, or averaged over multiple runs. This task is a little different from the previous ones, since you're starting in the air. Was it harder to learn? Why/why not?</p>
 
