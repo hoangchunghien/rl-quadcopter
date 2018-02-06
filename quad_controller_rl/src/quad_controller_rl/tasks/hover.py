@@ -29,10 +29,10 @@ class Hover(BaseTask):
     def reset(self):
         # Nothing to reset; just return initial condition
         return Pose(
-                position=Point(0.0, 0.0, np.random.normal(10.0, 1.0)),  # drop off from a slight random height
+                position=Point(0.0, 0.0, np.random.normal(10.0, 0.1)),  # drop off from a slight random height
                 orientation=Quaternion(0.0, 0.0, 0.0, 0.0),
             ), Twist(
-                linear=Vector3(0.0, 0.0, 0.0),
+                linear=Vector3(0.0, 0.0, 1.0),  # A little linear acceleration to cope up with initial gravity pull
                 angular=Vector3(0.0, 0.0, 0.0)
             )
 
@@ -47,14 +47,11 @@ class Hover(BaseTask):
         cur_pos = np.array([pose.position.x, pose.position.y, pose.position.z])
         dist = np.linalg.norm(cur_pos - self.target_pos)
         # print(linear_acceleration)
-        acceleration = np.sum(np.abs([linear_acceleration.x, linear_acceleration.y, linear_acceleration.z]))
-        reward = -dist
 
-        if acceleration >= 6:
-            reward -= acceleration
-
-        if dist <= 1.0:  # agent has reach target height
-            reward += 10.  # bonus reward
+        if dist <= 3.0:  # agent has to hover around a boundary of 3 points
+            reward = 10.0  # reward for each time step the agent hover there
+        else:
+            reward = -dist - abs(linear_acceleration.z)  # penalize if the agent move beyond the fixed boundary
 
         if timestamp > self.max_duration:  # agent has run out of time
             reward -= 10.0  # extra penalty
